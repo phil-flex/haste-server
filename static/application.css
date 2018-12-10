@@ -13,10 +13,10 @@ textarea {
 	padding: 0px;
 	width: 100%;
 	height: 100%;
-	font-family: monospace;
+	font-family: Consolas, monospace;
 	outline: none;
 	resize: none;
-	font-size: 13px;
+	font-size: 14px;
 }
 
 /* the line numbers */

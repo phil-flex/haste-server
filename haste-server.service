@@ -1,0 +1,24 @@
+[Unit]
+Description=Haste Bin Server
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/node /opt/haste-server/server.js $*
+Environment=NODE_ENV=production
+WorkingDirectory=/opt/haste-server/
+
+# Restart timing
+Restart=always
+RestartSec=60
+
+# Output to syslog
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=haste-server
+
+# User & group to run service as
+User=haste
+Group=haste
+
+[Install]
+WantedBy=default.target

@@ -1,5 +1,3 @@
-/* global $, hljs, window, document */
-
 ///// represents a single document
 
 var haste_document = function() {
@@ -18,7 +16,7 @@ haste_document.prototype.htmlEscape = function(s) {
 // Get this document from the server and lock it here
 haste_document.prototype.load = function(key, callback, lang) {
   var _this = this;
-  $.ajax('/documents/' + key, {
+  $.ajax('/haste/documents/' + key.split('/').slice(-1), {
     type: 'get',
     dataType: 'json',
     success: function(res) {
@@ -44,7 +42,7 @@ haste_document.prototype.load = function(key, callback, lang) {
         value: high.value,
         key: key,
         language: high.language || lang,
-        lineCount: res.data.split('\n').length
+        lineCount: res.data.split("\n").length
       });
     },
     error: function() {
@@ -60,7 +58,7 @@ haste_document.prototype.save = function(data, callback) {
   }
   this.data = data;
   var _this = this;
-  $.ajax('/documents', {
+  $.ajax('/haste/documents', {
     type: 'post',
     data: data,
     dataType: 'json',
@@ -150,7 +148,7 @@ haste.prototype.newDocument = function(hideHistory) {
   this.$box.hide();
   this.doc = new haste_document();
   if (!hideHistory) {
-    window.history.pushState(null, this.appName, '/');
+    window.history.pushState(null, this.appName, '/haste/');
   }
   this.setTitle();
   this.lightKey();
@@ -245,7 +243,7 @@ haste.prototype.lockDocument = function() {
     else if (ret) {
       _this.$code.html(ret.value);
       _this.setTitle(ret.key);
-      var file = '/' + ret.key;
+      var file = '/haste/' + ret.key;
       if (ret.language) {
         file += '.' + _this.lookupExtensionByType(ret.language);
       }
@@ -304,9 +302,10 @@ haste.prototype.configureButtons = function() {
       },
       shortcutDescription: 'control + shift + r',
       action: function() {
-        window.location.href = '/raw/' + _this.doc.key;
+        window.location.href = '/haste/raw/' + _this.doc.key.split('/').slice(-1);
       }
-    },
+    }
+    /*,
     {
       $where: $('#box2 .twitter'),
       label: 'Twitter',
@@ -318,6 +317,7 @@ haste.prototype.configureButtons = function() {
         window.open('https://twitter.com/share?url=' + encodeURI(window.location.href));
       }
     }
+    */
   ];
   for (var i = 0; i < this.buttons.length; i++) {
     this.configureButton(this.buttons[i]);

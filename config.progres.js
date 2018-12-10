@@ -1,10 +1,16 @@
 {
+
   "host": "0.0.0.0",
   "port": 7777,
+
   "keyLength": 10,
+
   "maxLength": 400000,
+
   "staticMaxAge": 86400,
+
   "recompressStaticAssets": true,
+
   "logging": [
     {
       "level": "verbose",
@@ -27,8 +33,8 @@
   },
 
   "storage": {
-    "type": "file",
-    "path": "/opt/haste-server/data"
+    "type": "postgres",
+    "connectionUrl": "postgres://haste:etsah@localhost:5432/haste"
   },
 
   "documents": {
